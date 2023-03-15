@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/akram-jomaa/community-portal-backend#readme",
   "dependencies": {
+    "@fastify/cors": "^8.2.1",
     "@prisma/client": "^4.10.1",
     "fastify": "^4.13.0"
   },
