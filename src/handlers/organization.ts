@@ -1,3 +1,4 @@
+import { Organization } from '@prisma/client';
 import { FastifyReply, FastifyRequest } from 'fastify';
 import { OrganizationService } from '../services/organization'
 
@@ -6,20 +7,46 @@ type GetByIdRequest = FastifyRequest<{
     Params: { id: string }
   }>
 
+type CreateForNameRequest = FastifyRequest<{
+    Body: { name: string }
+  }>
+
+//   Spring - Java this is called data transfer objects
+//  Django - Python this is called serializers
+interface OrganizationDTO {
+    publicId: string,
+    name: string
+}
+
+function mapOrganizationToDTO(organization: Organization) : OrganizationDTO {
+    return {
+        publicId: organization.publicId,
+        name: organization.name,
+    }
+}
+
 async function getByIdHandler (req: GetByIdRequest, res: FastifyReply) {
-    const {getById} = OrganizationService
-    const {id: idStr} = req.params
+    const {getByPublicId} = OrganizationService
+    const {id} = req.params
 
-    const  id = parseInt(idStr)
+    const organization = await getByPublicId(id)
 
-    //TODO: validate that idStr is a proper numebr
+    const orgnaizationDto= mapOrganizationToDTO(organization)
 
-    const organization = await getById(id)
+    res.status(200).send(orgnaizationDto)
+}
 
-    res.status(200).send(organization)
+async function createHandler (req: CreateForNameRequest, res: FastifyReply) {
+    const {createFromName} = OrganizationService
+    const { name } = req.body
+
+    const organization = await createFromName(name)
+
+    res.status(201).send(organization)
 }
 
 
 export const OrganizationHandler = {
-    getByIdHandler
+    getByIdHandler,
+    createHandler
 }

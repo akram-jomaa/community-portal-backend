@@ -1,6 +1,6 @@
 import fastify from 'fastify'
 import cors from '@fastify/cors'
-import {OrganizationHandler} from './src/handlers/organization'
+import {OrganizationHandler} from './handlers/organization'
 
 const server = fastify()
 
@@ -9,6 +9,7 @@ server.register(cors, {
 })
 
 server.get('/api/v1/organization/:id', OrganizationHandler.getByIdHandler)
+server.post('/api/v1/organization', OrganizationHandler.createHandler)
 
 server.listen({ port: 8080 }, (err, address) => {
   if (err) {

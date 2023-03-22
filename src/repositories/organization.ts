@@ -7,7 +7,23 @@ async function findById (id: number) {
   return organization
 }
 
+async function findByPublicId (publicId: string) {
+  const organization = await prisma.organization.findUnique({
+    where: { publicId }
+  })
+  return organization
+}
+
+async function create (name: string) {
+  const organization = await prisma.organization.create({
+    data: { name }
+  })
+  return organization
+}
+
 export const OrganizationRepository = {
-  findById
+  findById,
+  findByPublicId,
+  create
 }
 
