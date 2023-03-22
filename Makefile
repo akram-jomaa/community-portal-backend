@@ -1,3 +1,5 @@
+.PHONY: migrate run-db build run-server
+
 migrate:
 	npx prisma migrate dev
 

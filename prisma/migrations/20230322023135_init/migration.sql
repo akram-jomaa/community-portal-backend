@@ -1,7 +1,7 @@
 -- CreateTable
 CREATE TABLE "Organization" (
     "id" SERIAL NOT NULL,
-    "public_id" UUID NOT NULL,
+    "publicId" UUID NOT NULL,
     "name" VARCHAR(255) NOT NULL,
 
     CONSTRAINT "Organization_pkey" PRIMARY KEY ("id")
@@ -10,7 +10,7 @@ CREATE TABLE "Organization" (
 -- CreateTable
 CREATE TABLE "UserType" (
     "id" SERIAL NOT NULL,
-    "public_id" UUID NOT NULL,
+    "publicId" UUID NOT NULL,
     "name" VARCHAR(127) NOT NULL,
 
     CONSTRAINT "UserType_pkey" PRIMARY KEY ("id")
@@ -19,9 +19,9 @@ CREATE TABLE "UserType" (
 -- CreateTable
 CREATE TABLE "User" (
     "id" SERIAL NOT NULL,
-    "public_id" UUID NOT NULL,
-    "first_name" VARCHAR(255) NOT NULL,
-    "last_name" VARCHAR(255) NOT NULL,
+    "publicId" UUID NOT NULL,
+    "firstName" VARCHAR(255) NOT NULL,
+    "lastName" VARCHAR(255) NOT NULL,
     "username" VARCHAR(255) NOT NULL,
     "email" TEXT NOT NULL,
     "phoneNumber" VARCHAR(16) NOT NULL,
@@ -34,7 +34,7 @@ CREATE TABLE "User" (
 -- CreateTable
 CREATE TABLE "PrayerType" (
     "id" SERIAL NOT NULL,
-    "public_id" UUID NOT NULL,
+    "publicId" UUID NOT NULL,
     "name" VARCHAR(127) NOT NULL,
 
     CONSTRAINT "PrayerType_pkey" PRIMARY KEY ("id")
@@ -43,7 +43,7 @@ CREATE TABLE "PrayerType" (
 -- CreateTable
 CREATE TABLE "PrayerCall" (
     "id" SERIAL NOT NULL,
-    "public_id" UUID NOT NULL,
+    "publicId" UUID NOT NULL,
     "name" VARCHAR(127) NOT NULL,
 
     CONSTRAINT "PrayerCall_pkey" PRIMARY KEY ("id")
@@ -52,7 +52,7 @@ CREATE TABLE "PrayerCall" (
 -- CreateTable
 CREATE TABLE "PrayerTime" (
     "id" SERIAL NOT NULL,
-    "public_id" UUID NOT NULL,
+    "publicId" UUID NOT NULL,
     "prayerTypeId" INTEGER NOT NULL,
     "prayerCallId" INTEGER NOT NULL,
     "organizationId" INTEGER NOT NULL,
@@ -63,6 +63,9 @@ CREATE TABLE "PrayerTime" (
 
 -- CreateIndex
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
+
+-- CreateIndex
+CREATE INDEX "User_email_idx" ON "User"("email");
 
 -- AddForeignKey
 ALTER TABLE "User" ADD CONSTRAINT "User_userTypeId_fkey" FOREIGN KEY ("userTypeId") REFERENCES "UserType"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

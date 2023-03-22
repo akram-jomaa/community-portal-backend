@@ -12,24 +12,24 @@ datasource db {
 
 model Organization {
   id          Int          @id @default(autoincrement())
-  public_id   String       @default(uuid()) @db.Uuid
+  publicId    String       @default(uuid()) @db.Uuid @unique
   name        String       @db.VarChar(255)
   users       User[]
   prayerTimes PrayerTime[]
 }
 
 model UserType {
-  id        Int    @id @default(autoincrement())
-  public_id String @default(uuid()) @db.Uuid
-  name      String @db.VarChar(127)
-  users     User[]
+  id       Int    @id @default(autoincrement())
+  publicId String @default(uuid()) @db.Uuid @unique
+  name     String @db.VarChar(127)
+  users    User[]
 }
 
 model User {
   id             Int          @id @default(autoincrement())
-  public_id      String       @default(uuid()) @db.Uuid
-  first_name     String       @db.VarChar(255)
-  last_name      String       @db.VarChar(255)
+  publicId       String       @default(uuid()) @db.Uuid @unique
+  firstName      String       @db.VarChar(255)
+  lastName       String       @db.VarChar(255)
   username       String       @db.VarChar(255)
   email          String       @unique
   phoneNumber    String       @db.VarChar(16)
@@ -43,21 +43,21 @@ model User {
 
 model PrayerType {
   id          Int          @id @default(autoincrement())
-  public_id   String       @default(uuid()) @db.Uuid
+  publicId    String       @default(uuid()) @db.Uuid @unique
   name        String       @db.VarChar(127)
   prayerTimes PrayerTime[]
 }
 
 model PrayerCall {
   id          Int          @id @default(autoincrement())
-  public_id   String       @default(uuid()) @db.Uuid
+  publicId    String       @default(uuid()) @db.Uuid @unique
   name        String       @db.VarChar(127)
   prayerTimes PrayerTime[]
 }
 
 model PrayerTime {
   id             Int          @id @default(autoincrement())
-  public_id      String       @default(uuid()) @db.Uuid
+  publicId       String       @default(uuid()) @db.Uuid @unique
   prayerType     PrayerType   @relation(fields: [prayerTypeId], references: [id])
   prayerTypeId   Int
   prayerCall     PrayerCall   @relation(fields: [prayerCallId], references: [id])
