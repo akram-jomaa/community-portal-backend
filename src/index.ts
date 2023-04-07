@@ -1,7 +1,7 @@
 import fastify from 'fastify'
 import cors from '@fastify/cors'
 import {OrganizationHandler} from './handlers/organization'
-import {PrayerTypeHandler} from './handlers/prayer-type'
+import {PrayerTypeHandler} from './handlers/prayerType'
 
 const server = fastify()
 

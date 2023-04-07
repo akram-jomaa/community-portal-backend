@@ -1,4 +1,4 @@
-import { PrayerTypeRepository } from '../repositories/prayer-type'
+import { PrayerTypeRepository } from '../repositories/prayerType'
 
 
 async function getById(id:number) {
@@ -28,7 +28,7 @@ async function createFromName(name:string) {
   return prayerType
 }
 
-export const prayerTypeService =  {
+export const PrayerTypeService =  {
   getById,
   getByPublicId,
   createFromName

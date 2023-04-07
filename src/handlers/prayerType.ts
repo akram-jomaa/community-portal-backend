@@ -1,6 +1,6 @@
 import { PrayerType } from '@prisma/client';
 import { FastifyReply, FastifyRequest } from 'fastify';
-import { PrayerTypeService } from '../services/prayer-type'
+import { PrayerTypeService } from '../services/prayerType'
 
 
 type GetByIdRequest = FastifyRequest<{
