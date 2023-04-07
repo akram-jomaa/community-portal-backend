@@ -1,6 +1,6 @@
 import { prisma } from "./client";
 
-async function findByTimeAndOrganization ({time, organizationId}: {time: Date, organizationId: number}) {
+async function findByTimeAndOrganization ({time, organizationId}: {time: Date, organizationId: string}) {
   const startTime = new Date (time)
   startTime.setHours(0, 0, 0, 0)
   const endTime = new Date(time)
@@ -11,7 +11,7 @@ async function findByTimeAndOrganization ({time, organizationId}: {time: Date, o
         gte: startTime,
         lte: endTime,
       },
-      organizationId,
+      organization: {publicId: organizationId},
     }
   })
   return PrayerTime
