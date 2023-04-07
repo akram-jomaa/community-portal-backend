@@ -1,6 +1,6 @@
 import { prisma } from "./client";
 
-async function findByTimeAndOrganization (time: Date, organizationId: number) {
+async function findByTimeAndOrganization ({time, organizationId}: {time: Date, organizationId: number}) {
   const startTime = new Date (time)
   startTime.setHours(0, 0, 0, 0)
   const endTime = new Date(time)
@@ -17,15 +17,52 @@ async function findByTimeAndOrganization (time: Date, organizationId: number) {
   return PrayerTime
 }
 
-async function create ({ organizationId }:{ organizationId: number, }) {
+async function create (
+  { time, organizationId, prayerTypeId, prayerCallId}:
+  { time: Date, organizationId: string, prayerTypeId: string, prayerCallId: string}
+  ) {
   const PrayerTime = await prisma.prayerTime.create({
-    data: { name }
+    data: {
+      time,
+      organization: {
+        connect: { publicId: organizationId },
+      },
+      prayerType: {
+        connect: { publicId: prayerTypeId },
+      },
+      prayerCall: {
+        connect: { publicId: prayerCallId },
+      },
+    },
+  })
+  return PrayerTime
+}
+
+async function update (
+  { time, organizationId, prayerTypeId, prayerCallId, publicId}:
+  { time: Date, organizationId: string, prayerTypeId: string, prayerCallId: string, publicId: string}
+  ) {
+  const PrayerTime = await prisma.prayerTime.update({
+    where: { publicId },
+    data: {
+      time,
+      organization: {
+        connect: { publicId: organizationId },
+      },
+      prayerType: {
+        connect: { publicId: prayerTypeId },
+      },
+      prayerCall: {
+        connect: { publicId: prayerCallId },
+      },
+    },
   })
   return PrayerTime
 }
 
 export const PrayerTimeRepository = {
   findByTimeAndOrganization,
-  create
+  create,
+  update
 }
 
