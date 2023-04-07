@@ -21,6 +21,7 @@
   "dependencies": {
     "@fastify/cors": "^8.2.1",
     "@prisma/client": "^4.10.1",
+    "dayjs": "^1.11.7",
     "fastify": "^4.13.0"
   },
   "devDependencies": {
