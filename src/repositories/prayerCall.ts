@@ -1,5 +1,10 @@
 import { prisma } from "./client";
 
+async function findAll () {
+  const PrayerCalls = await prisma.prayerCall.findMany()
+  return PrayerCalls
+}
+
 async function findById (id: number) {
   const PrayerCall = await prisma.prayerCall.findUnique({
     where: { id }
@@ -22,6 +27,7 @@ async function create (name: string) {
 }
 
 export const PrayerCallRepository = {
+  findAll,
   findById,
   findByPublicId,
   create
