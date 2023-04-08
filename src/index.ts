@@ -14,10 +14,10 @@ server.register(cors, {
 server.get('/api/v1/organization/:id', OrganizationHandler.getByIdHandler)
 server.post('/api/v1/organization', OrganizationHandler.createHandler)
 
-server.get('/api/v1/prayer-type/:id', PrayerTypeHandler.getByIdHandler)
+server.get('/api/v1/prayer-type', PrayerTypeHandler.getAllHandler)
 server.post('/api/v1/prayer-type', PrayerTypeHandler.createHandler)
 
-server.get('/api/v1/prayer-call/:id', PrayerCallHandler.getByIdHandler)
+server.get('/api/v1/prayer-call', PrayerCallHandler.getAllHandler)
 server.post('/api/v1/prayer-call', PrayerCallHandler.createHandler)
 
 server.get('/api/v1/prayer-time/:organizationId/:time',
