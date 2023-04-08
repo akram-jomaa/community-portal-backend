@@ -1,6 +1,15 @@
 import { PrayerTypeRepository } from '../repositories/prayerType'
 
 
+async function getAll() {
+  const {findAll} = PrayerTypeRepository
+  const prayerType = await findAll()
+  if (!prayerType) {
+    throw new Error(`can't find prayerType`)
+  }
+  return prayerType
+}
+
 async function getById(id:number) {
   const {findById} = PrayerTypeRepository
   const prayerType = await findById(id)
@@ -29,6 +38,7 @@ async function createFromName(name:string) {
 }
 
 export const PrayerTypeService =  {
+  getAll,
   getById,
   getByPublicId,
   createFromName

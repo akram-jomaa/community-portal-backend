@@ -3,6 +3,9 @@ import { FastifyReply, FastifyRequest } from 'fastify';
 import { PrayerTypeService } from '../services/prayerType'
 
 
+type GetAllRequest = FastifyRequest<{
+  }>
+
 type GetByIdRequest = FastifyRequest<{
     Params: { id: string }
   }>
@@ -23,6 +26,23 @@ function mapPrayerTypeToDTO(prayerType: PrayerType) : PrayerTypeDTO {
         publicId: prayerType.publicId,
         name: prayerType.name,
     }
+}
+
+function mapPrayerTypeArrayToDTO(prayerTypes: PrayerType[]) : PrayerTypeDTO[] {
+    return prayerTypes.map((prayerType) => ({
+        publicId: prayerType.publicId,
+        name: prayerType.name,
+    }))
+}
+
+async function getAllHandler (req: GetAllRequest, res: FastifyReply) {
+    const {getAll} = PrayerTypeService
+
+    const prayerTypes = await getAll()
+
+    const prayerTypeDto= mapPrayerTypeArrayToDTO(prayerTypes)
+
+    res.status(200).send(prayerTypeDto)
 }
 
 async function getByIdHandler (req: GetByIdRequest, res: FastifyReply) {
@@ -47,6 +67,7 @@ async function createHandler (req: CreateForNameRequest, res: FastifyReply) {
 
 
 export const PrayerTypeHandler = {
+    getAllHandler,
     getByIdHandler,
     createHandler
 }
