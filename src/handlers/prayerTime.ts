@@ -4,7 +4,7 @@ import { PrayerTimeService } from '../services/prayerTime'
 
 
 type GetByIdRequest = FastifyRequest<{
-    Params: { time: Date, organizationId: string }
+    Params: { time: string, organizationId: string }
   }>
 
 type CreateTimeRequest = FastifyRequest<{
@@ -33,7 +33,7 @@ async function getByTimeAndOrganizationHandler (req: GetByIdRequest, res: Fastif
     const {getByTimeAndOrganization} = PrayerTimeService
     const {time, organizationId} = req.params
 
-    const prayerTimes = await getByTimeAndOrganization({time, organizationId} )
+    const prayerTimes = await getByTimeAndOrganization({time: new Date(time), organizationId} )
 
     const prayerTimeDto= mapPrayerTimeToDTO(prayerTimes)
 
@@ -59,7 +59,7 @@ async function updateHandler (req: UpdateTimeRequest, res: FastifyReply) {
 }
 
 
-export const PrayerTypeHandler = {
+export const PrayerTimeHandler = {
   getByTimeAndOrganizationHandler,
   createHandler,
   updateHandler

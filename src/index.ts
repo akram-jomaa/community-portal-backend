@@ -2,6 +2,8 @@ import fastify from 'fastify'
 import cors from '@fastify/cors'
 import {OrganizationHandler} from './handlers/organization'
 import {PrayerTypeHandler} from './handlers/prayerType'
+import {PrayerCallHandler} from './handlers/prayerCall'
+import {PrayerTimeHandler} from './handlers/prayerTime'
 
 const server = fastify()
 
@@ -14,6 +16,14 @@ server.post('/api/v1/organization', OrganizationHandler.createHandler)
 
 server.get('/api/v1/prayer-type/:id', PrayerTypeHandler.getByIdHandler)
 server.post('/api/v1/prayer-type', PrayerTypeHandler.createHandler)
+
+server.get('/api/v1/prayer-call/:id', PrayerCallHandler.getByIdHandler)
+server.post('/api/v1/prayer-call', PrayerCallHandler.createHandler)
+
+server.get('/api/v1/prayer-time/:organizationId/:time',
+  PrayerTimeHandler.getByTimeAndOrganizationHandler)
+server.post('/api/v1/prayer-time', PrayerTimeHandler.createHandler)
+server.put('/api/v1/prayer-time', PrayerTimeHandler.updateHandler)
 
 server.listen({ port: 8080 }, (err, address) => {
   if (err) {
