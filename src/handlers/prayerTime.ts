@@ -8,23 +8,37 @@ type GetByIdRequest = FastifyRequest<{
   }>
 
 type CreateTimeRequest = FastifyRequest<{
-    Body: { time: Date, organizationId: string, prayerTypeId: string, prayerCallId: string }
+    Body: { time: string, date: string, organizationId: string, prayerTypeId: string, prayerCallId: string }
   }>
 
 type UpdateTimeRequest = FastifyRequest<{
-    Body: { time: Date, organizationId: string, prayerTypeId: string, prayerCallId: string, publicId: string }
+    Body: { time: string, date: string, organizationId: string, prayerTypeId: string, prayerCallId: string, publicId: string }
   }>
 
 //   Spring - Java this is called data transfer objects
 //  Django - Python this is called serializers
 interface PrayerTimeDTO {
   organizationId: string,
+  publicId: string,
+  prayerTypeId: string,
+  prayerCallId: string,
   time: Date
 }
-
-function mapPrayerTimeToDTO(prayerTimes: PrayerTime[]) : PrayerTimeDTO[] {
+type extendedPrayerTime = PrayerTime &     {prayerType: {
+  publicId: string;
+};
+prayerCall: {
+  publicId: string;
+};
+organization: {
+  publicId: string;
+}};
+function mapPrayerTimeToDTO(prayerTimes: extendedPrayerTime[]) : PrayerTimeDTO[] {
     return prayerTimes.map((prayerTime) => ({
-      organizationId: prayerTime.publicId,
+      publicId: prayerTime.publicId,
+      prayerTypeId: prayerTime.prayerType.publicId,
+      prayerCallId: prayerTime.prayerCall.publicId,
+      organizationId: prayerTime.organization.publicId,
       time: prayerTime.time,
     }))
 }
@@ -42,18 +56,18 @@ async function getByTimeAndOrganizationHandler (req: GetByIdRequest, res: Fastif
 
 async function createHandler (req: CreateTimeRequest, res: FastifyReply) {
     const {createTime} = PrayerTimeService
-    const { time, organizationId, prayerTypeId, prayerCallId } = req.body
+    const { time, date, organizationId, prayerTypeId, prayerCallId } = req.body
 
-    const prayerType = await createTime({time, organizationId, prayerTypeId, prayerCallId})
+    const prayerType = await createTime({time: new Date(`${date}:${time}`), organizationId, prayerTypeId, prayerCallId})
 
     res.status(201).send(prayerType)
 }
 
 async function updateHandler (req: UpdateTimeRequest, res: FastifyReply) {
     const {updateTime} = PrayerTimeService
-    const { time, organizationId, prayerTypeId, prayerCallId, publicId } = req.body
+    const { time, date, organizationId, prayerTypeId, prayerCallId, publicId } = req.body
 
-    const prayerType = await updateTime({time, organizationId, prayerTypeId, prayerCallId, publicId})
+    const prayerType = await updateTime({time: new Date(`${date}:${time}`), organizationId, prayerTypeId, prayerCallId, publicId})
 
     res.status(201).send(prayerType)
 }

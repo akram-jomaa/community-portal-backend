@@ -1,18 +1,34 @@
 import { prisma } from "./client";
 
 async function findByTimeAndOrganization ({time, organizationId}: {time: Date, organizationId: string}) {
-  const startTime = new Date (time)
-  startTime.setHours(0, 0, 0, 0)
-  const endTime = new Date(time)
-  endTime.setHours(23, 59, 59, 999)
+  const newDate = new Date(time.valueOf())
+  const tomorrow = new Date((newDate).setDate((newDate).getDate() + 1),)
+  
   const PrayerTime = await prisma.prayerTime.findMany({
     where: {
       time: {
-        gte: startTime,
-        lte: endTime,
+        gte: time,
+        lte: tomorrow,
       },
       organization: {publicId: organizationId},
-    }
+    },
+    include: {
+      prayerType: {
+        select: {
+          publicId: true,
+        },
+      },
+      prayerCall: {
+        select: {
+          publicId: true,
+        },
+      },
+      organization: {
+        select: {
+          publicId: true,
+        },
+      },
+    },
   })
   return PrayerTime
 }
