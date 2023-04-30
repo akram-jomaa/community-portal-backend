@@ -7,8 +7,8 @@ async function findByTimeAndOrganization ({time, organizationId}: {time: Date, o
   const PrayerTime = await prisma.prayerTime.findMany({
     where: {
       time: {
-        gte: time,
-        lte: tomorrow,
+        gte: new Date(time.getTime() + time.getTimezoneOffset() * 60 * 1000),
+        lte: new Date(tomorrow.getTime() + tomorrow.getTimezoneOffset() * 60 * 1000),
       },
       organization: {publicId: organizationId},
     },
