@@ -2,6 +2,7 @@ import fastify from 'fastify'
 import cors from '@fastify/cors'
 import {OrganizationHandler} from './handlers/organization'
 import cookie, { FastifyCookieOptions } from "@fastify/cookie";
+import {AuthHandler} from './handlers/auth'
 import {PrayerTypeHandler} from './handlers/prayerType'
 import {PrayerCallHandler} from './handlers/prayerCall'
 import {PrayerTimeHandler} from './handlers/prayerTime'
@@ -21,6 +22,9 @@ server.register(cookie, {
   parseOptions: {} ,
 } as FastifyCookieOptions)
 server.post('/api/v1/organization', OrganizationHandler.createHandler)
+server.post('/jwt/v1/exchange', AuthHandler.exchangeTokenHandler)
+server.get('/jwt/v1/refresh', AuthHandler.refreshTokenHandler)
+server.get('/jwt/v1/logout', AuthHandler.logoutHandler)
 
 server.get('/api/v1/prayer-type', PrayerTypeHandler.getAllHandler)
 server.post('/api/v1/prayer-type', PrayerTypeHandler.createHandler)
