@@ -8,8 +8,10 @@ import {PrayerTimeHandler} from './handlers/prayerTime'
 
 const server = fastify()
 
-server.register(cors, { 
-  // put your options here
+server.register(cors, {
+  origin: process.env.CORS_ORIGIN as string,
+  methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "HEAD", "OPTIONS"],
+  credentials: true,
 })
 
 server.get('/api/v1/organization/:id', OrganizationHandler.getByIdHandler)
