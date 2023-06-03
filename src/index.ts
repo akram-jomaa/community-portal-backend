@@ -23,6 +23,7 @@ server.register(cookie, {
 } as FastifyCookieOptions)
 
 server.get('/api/v1/organization/:id', {preHandler: verifyTokenAndGetUser<GetByIdRequest>}, OrganizationHandler.getByIdHandler)
+server.get('/api/v1/organization', OrganizationHandler.getAllOrganizationsHandler)
 
 server.post('/jwt/v1/exchange', AuthHandler.exchangeTokenHandler)
 server.get('/jwt/v1/refresh', AuthHandler.refreshTokenHandler)

@@ -21,9 +21,15 @@ async function create (name: string) {
   return organization
 }
 
+async function findAll () {
+  const organizations = await prisma.organization.findMany()
+  return organizations
+}
+
 export const OrganizationRepository = {
   findById,
   findByPublicId,
-  create
+  create,
+  findAll
 }
 

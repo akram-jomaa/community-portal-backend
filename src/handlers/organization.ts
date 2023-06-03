@@ -47,8 +47,17 @@ async function createHandler (req: CreateForNameRequest, res: FastifyReply) {
     res.status(201).send(organization)
 }
 
+async function getAllOrganizationsHandler (req: FastifyRequest, res: FastifyReply) {
+    const {getAllOrganizations} = OrganizationService
+
+    const organizations = (await getAllOrganizations()).map(mapOrganizationToDTO)
+
+    res.status(200).send(organizations)
+}
+
 
 export const OrganizationHandler = {
     getByIdHandler,
-    createHandler
+    createHandler,
+    getAllOrganizationsHandler
 }

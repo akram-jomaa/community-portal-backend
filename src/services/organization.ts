@@ -28,8 +28,18 @@ async function createFromName(name:string) {
   return organization
 }
 
+async function getAllOrganizations() {
+  const {findAll} = OrganizationRepository
+  const organizations = await findAll()
+  if (!organizations) {
+    throw new Error(`can't find any organizations`)
+  }
+  return organizations
+}
+
 export const OrganizationService =  {
   getById,
   getByPublicId,
-  createFromName
+  createFromName,
+  getAllOrganizations
 }
