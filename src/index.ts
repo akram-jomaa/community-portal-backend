@@ -25,7 +25,7 @@ server.get('/api/v1/prayer-time/:organizationId/:time',
 server.post('/api/v1/prayer-time', PrayerTimeHandler.createHandler)
 server.put('/api/v1/prayer-time', PrayerTimeHandler.updateHandler)
 
-server.listen({ port: 8080 }, (err, address) => {
+server.listen({ port: 8080, host: '0.0.0.0' }, (err, address) => {
   if (err) {
     console.error(err)
     process.exit(1)
