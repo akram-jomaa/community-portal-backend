@@ -12,5 +12,7 @@ RUN npm install
 RUN npx prisma generate
 RUN npm run build
 
+EXPOSE 8080
+
 # Specify the command to run your application
 CMD [ "node", "./build/index.js" ]
