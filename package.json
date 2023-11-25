@@ -5,7 +5,7 @@
   "main": "src/index.ts",
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "start": "node ./build/index.js",
+    "start": "platformatic db start",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
