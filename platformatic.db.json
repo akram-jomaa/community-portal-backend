@@ -10,6 +10,11 @@
     "db": {
         "graphql": {
             "graphiql": false
-        }
+        },
+        "connectionString": "postgres://community_portal_backend_db_user:bKn4zoRwRNtItPioUMLzFJUcQaUvgisM@dpg-clh6spvjc5ks73ejvff0-a.frankfurt-postgres.render.com/community_portal_backend_db"
+    },
+    "migrations": {
+        "dir": "/prisma/migrations",
+        "autoApply": true
     }
 }
