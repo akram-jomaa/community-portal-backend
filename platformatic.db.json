@@ -1,0 +1,11 @@
+{
+    "server": {
+        "port": "{PORT}",
+        "hostname": "{PLT_SERVER_HOSTNAME}"
+    },
+    "db": {
+        "graphql": {
+            "graphiql": false
+        }
+    }
+}
