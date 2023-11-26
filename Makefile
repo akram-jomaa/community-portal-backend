@@ -1,7 +1,4 @@
-.PHONY: migrate run-db build run-server
-
-migrate:
-	npx prisma migrate dev
+.PHONY: run-db build run-server
 
 run-db:
 	docker compose  up -d
