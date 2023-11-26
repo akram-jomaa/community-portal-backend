@@ -7,9 +7,9 @@ services:
     ports:
       - "5432:5432"
     environment:
-      - POSTGRES_DB=postgres
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=dpg-clh6spvjc5ks73ejvff0-a.frankfurt-postgres.render.com
+      - POSTGRES_USER=community_portal_backend_db_user
+      - POSTGRES_PASSWORD=bKn4zoRwRNtItPioUMLzFJUcQaUvgisM
     volumes:
       - database_postgres:/var/lib/postgresql/data  
 volumes:
