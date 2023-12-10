@@ -1,9 +1,8 @@
-import { Organization } from '@prisma/client';
+import type { Organization } from '@prisma/client';
 import { FastifyReply, FastifyRequest } from 'fastify';
 import { OrganizationService } from '../services/organization'
 
-
-type GetByIdRequest = FastifyRequest<{
+export type GetByIdRequest = FastifyRequest<{
     Params: { id: string }
   }>
 
@@ -28,6 +27,9 @@ function mapOrganizationToDTO(organization: Organization) : OrganizationDTO {
 async function getByIdHandler (req: GetByIdRequest, res: FastifyReply) {
     const {getByPublicId} = OrganizationService
     const {id} = req.params
+    const user = req.user
+
+    if(!user) throw new Error('No user found')
 
     const organization = await getByPublicId(id)
 

@@ -12,7 +12,7 @@ datasource db {
 
 model Organization {
   id          Int          @id @default(autoincrement())
-  publicId    String       @default(uuid()) @db.Uuid @unique
+  publicId    String       @unique @default(uuid()) @db.Uuid
   name        String       @db.VarChar(255)
   users       User[]
   prayerTimes PrayerTime[]
@@ -20,14 +20,14 @@ model Organization {
 
 model UserType {
   id       Int    @id @default(autoincrement())
-  publicId String @default(uuid()) @db.Uuid @unique
+  publicId String @unique @default(uuid()) @db.Uuid
   name     String @db.VarChar(127)
   users    User[]
 }
 
 model User {
   id             Int          @id @default(autoincrement())
-  publicId       String       @default(uuid()) @db.Uuid @unique
+  publicId       String       @unique @default(uuid()) @db.Uuid
   firstName      String       @db.VarChar(255)
   lastName       String       @db.VarChar(255)
   username       String       @db.VarChar(255)
@@ -43,21 +43,21 @@ model User {
 
 model PrayerType {
   id          Int          @id @default(autoincrement())
-  publicId    String       @default(uuid()) @db.Uuid @unique
+  publicId    String       @unique @default(uuid()) @db.Uuid
   name        String       @db.VarChar(127)
   prayerTimes PrayerTime[]
 }
 
 model PrayerCall {
   id          Int          @id @default(autoincrement())
-  publicId    String       @default(uuid()) @db.Uuid @unique
+  publicId    String       @unique @default(uuid()) @db.Uuid
   name        String       @db.VarChar(127)
   prayerTimes PrayerTime[]
 }
 
 model PrayerTime {
   id             Int          @id @default(autoincrement())
-  publicId       String       @default(uuid()) @db.Uuid @unique
+  publicId       String       @unique @default(uuid()) @db.Uuid
   prayerType     PrayerType   @relation(fields: [prayerTypeId], references: [id])
   prayerTypeId   Int
   prayerCall     PrayerCall   @relation(fields: [prayerCallId], references: [id])
@@ -65,4 +65,10 @@ model PrayerTime {
   organization   Organization @relation(fields: [organizationId], references: [id])
   organizationId Int
   time           DateTime     @db.Timestamp()
+}
+
+model RefreshToken {
+  id       Int    @id @default(autoincrement())
+  username String @unique @db.Text
+  jti      String @unique @db.Uuid
 }
